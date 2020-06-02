@@ -1,10 +1,11 @@
-import hltv.main as hltv
 import pprint as pp
 import requests
 import datetime
 from bs4 import BeautifulSoup
 from re import sub
 import re
+import numpy as np
+import pandas as pd
 
 import pickle as pk
 import sqlite3
@@ -225,12 +226,24 @@ def create_vec_features(current_match):
 
     players_age, players_info = get_players_stat_and_age_from_match(match_page)
 
-    return match_url, team1_url, team2_url, last5_matches1, last5_matches2, history_h2h,\
-                   rank1, rank2, top30_for_core1, top30_for_core2, average_age1, average_age2,\
-                   score1, score2, total_maps, star_cell, prize_pool, type_tour, teams_tour,\
-                   players_age, players_info
+    return np.array([match_url, team1_url, team2_url, *last5_matches1, *last5_matches2, *history_h2h,
+            rank1, rank2, top30_for_core1, top30_for_core2, average_age1, average_age2,
+            score1, score2, total_maps, star_cell, prize_pool, type_tour, teams_tour,
+            *players_age, *players_info])
 
 
+header = ['match_url', 'team1_url', 'team2_url',
+          *[f'5last_matches1_{k}_{i}' for k in range(5) for i in range(5)],
+          *[f'5last_matches2_{k}_{i}' for k in range(5) for i in range(5)],
+          'history_h2h_1win', 'history_h2h', 'history_h2h_2win',
+          'rank1', 'rank2', 'top30_for_core1', 'top30_for_core2', 'average_age1', 'average_age2',
+          'score1', 'score2', 'total_maps', 'star_cell', 'prize_pool', 'type_tour', 'teams_tour',
+          *[f'player{i}_age' for i in range(10)], *[f'player{k}_stat_{i}' for k in range(10) for i in range(6)]]
+
+
+len_head = len(header)
+data = [np.array(header)]
+print(data)
 
 
 for i in range(10):
@@ -243,33 +256,18 @@ for i in range(10):
         find_all('div', {"class": "result-con"})
     for k in range(len(matches)):
         print(i*100 + k)
-        with sqlite3.connect("matches.db") as conn:
-            try:
-                match_url, team1_url, team2_url, last5_matches1, last5_matches2, history_h2h,\
-                rank1, rank2, top30_for_core1, top30_for_core2, average_age1, average_age2,\
-                score1, score2, total_maps, star_cell, prize_pool, type_tour, teams_tour,\
-                players_age, players_info = create_vec_features(matches[k])
-                cur = conn.cursor()
-                cur.execute("""INSERT INTO matches (match_url,
-                                                    team1_url, team2_url,
-                                                    last5_matches1, last5_matches2,
-                                                    history_h2h,
-                                                    rank1, rank2,
-                                                    top30_for_core1, top30_for_core2,
-                                                        average_age1, average_age2,
-                                                    score1, score2, total_maps, star_cell,
-                                                    prize_pool, type_tour, teams_tour,
-                                                    players_age, players_info)
-                                                    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
-                            (match_url, team1_url, team2_url, pk.dumps(last5_matches1), pk.dumps(last5_matches2),
-                             pk.dumps(history_h2h),\
-                             rank1, rank2, top30_for_core1, top30_for_core2, average_age1, average_age2,\
-                             score1, score2, total_maps, star_cell, prize_pool, type_tour, teams_tour,\
-                             pk.dumps(players_age), pk.dumps(players_info)))
-                conn.commit()
-                cur.close()
-            except Exception as e:
-                print(e)
+        try:
+            tmp = create_vec_features(matches[k])
+            if len_head == len(tmp):
+                data.append(tmp)
+        except Exception as e:
+            print(e)
+
+
+data = np.array(data)
+print(data)
+df = pd.DataFrame(data=data[1:,:], columns=data[0, :])
+df.to_csv('df.csv')
 
 
 # https://www.hltv.org/results?offset=100
