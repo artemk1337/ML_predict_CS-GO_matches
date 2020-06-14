@@ -13,6 +13,7 @@
 
 ## USAGE
 
+### Parse matches
 
 ```
 >>> get_results_url(filename=None, pages_with_results=[0])
@@ -25,6 +26,8 @@
 > Return pandas DataFrame with columns:
 > - match_url <br />
 
+---
+### Add main common info from match page
 
 ```
 >>> MatchPageParams(df, start_index=None, finish_index=None)
@@ -62,6 +65,9 @@
 > - *5last_match[match_id]_score[team_id]* - the last 5 matches of the [team_id] (1 or 2); [match_id] - serial number of the match; score [team_id] in this match
 > - *5last_match[match_id]_opponent_score[team_id]* - the last 5 matches of the [team_id] (1 or 2); [match_id] - serial number of the match; opponent score in this match
 
+---
+### Add last played maps each team
+
 ```
 >>> LastMaps(df, last_maps=20, months=3, start_index=None, finish_index=None)
 ```
@@ -81,6 +87,9 @@
 > - *last_maps [id] _score [team_id]* - team*s score; id - map number, team_id - team number (team1 or team2)
 > - *last_maps [id] _opponent_score [team_id]* - opponent’s score; id - map number, team_id - team number (team1 or team2)
 
+---
+### Add info about tournament
+
 ```
 >>> Tour(df, start_index=None, finish_index=None)
 ```
@@ -98,6 +107,9 @@
 > - *event_type* - type of tournament (Lan or Online)
 > - *event_teams* - the number of teams in the tournament
 > - *prize_pool* - prize pool of the tournament
+
+---
+### Add played time in teams each player
 
 ```
 >>> PlStatInTeam(df, start_index=None, finish_index=None)
@@ -118,8 +130,11 @@
 > - *player[playerID]_days_in_all_team[team_id]* - days how long player is in all teams (0 or more)
 > - *player[playerID]_teams_all_team[team_id]* - the number of teams the player was in (0 or more)
 
+---
+### Add all stats each player
+
 ```
->>> LastMaps(df, months=3, start_index=None, finish_index=None)
+>>> PlStatAll(df, months=3, start_index=None, finish_index=None)
 ```
 > ___type: class___ <br />
 > Params:
@@ -136,6 +151,9 @@
 > - *[param] _player [player] _team [team_id]* - player statistics
 > - *[param] _maps_player [player_id] _team {team_id}* - played maps for calculating statistics (only some parameters)
 > - *age_player [player_id] _team [team_id]* - player age
+
+---
+### Add stats on all maps each team
 
 ```
 >>> AllMapsStat(df, last_maps=20, months=3, start_index=None, finish_index=None)
@@ -157,6 +175,7 @@
 > - *map_played[id]_team[team_id]* - score; [id] - serial number of played map
 > - *map_played[id]_opponent_team[team_id]* - opponent score; [id] - serial number of played map
 
+---
 ### Split DataFrame on maps and save stats on played map each team
 
 ```
