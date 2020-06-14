@@ -18,9 +18,12 @@
 ```
 >>> get_results_url(filename=None, pages_with_results=[0])
 ```
-> *filename* - for save pandas frame <br />
-> *pages_with_results* - array with numbers of pages with results <br />
+> Params: <br />
+> - *filename* - for saving pandas frame <br />
+> - *pages_with_results* - array with numbers of pages with 
+>
+> Return pandas DataFrame with columns: <br />
+> - match_url <br />
 
-Return pandas DataFrame with columns:
-- match_url <br />
+
 
