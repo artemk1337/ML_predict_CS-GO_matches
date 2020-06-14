@@ -9,11 +9,10 @@
 # The unofficial HLTV Python API
 
 ## INSTALLATION
------
 
 
 ## USAGE
------
+
 
 ```
 >>> get_results_url(filename=None, pages_with_results=[0])
