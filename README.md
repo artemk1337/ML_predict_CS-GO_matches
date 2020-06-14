@@ -33,7 +33,7 @@
 > Params:
 > - *df* - pandas frame with match urls
 > - *start_index* - start index 
-> - *finish_index* - alast index
+> - *finish_index* - last index
 
 ```
 >>> MatchPageParams.add_all_params()
@@ -71,7 +71,7 @@
 > - *last_maps* - last X played maps
 > - *months* - time period
 > - *start_index* - start index 
-> - *finish_index* - alast index
+> - *finish_index* - last index
 
 ```
 >>> LastMaps.add_all_params()
@@ -88,7 +88,7 @@
 > Params:
 > - *df* - pandas frame from previous step
 > - *start_index* - start index 
-> - *finish_index* - alast index
+> - *finish_index* - last index
 
 ```
 >>> Tour.add_all_params()
@@ -106,7 +106,7 @@
 > Params:
 > - *df* - pandas frame from previous step
 > - *start_index* - start index 
-> - *finish_index* - alast index
+> - *finish_index* - last index
 
 ```
 >>> PlStatInTeam.add_all_params()
@@ -126,7 +126,7 @@
 > - *df* - pandas frame from previous step
 > - *months* - time period
 > - *start_index* - start index 
-> - *finish_index* - alast index
+> - *finish_index* - last index
 
 ```
 >>> LastMaps.add_all_params()
@@ -146,7 +146,7 @@
 > - *last_maps* - last X played maps on map
 > - *months* - time period
 > - *start_index* - start index 
-> - *finish_index* - alast index
+> - *finish_index* - last index
 
 ```
 >>> LastMaps.add_all_params()
@@ -156,6 +156,29 @@
 > - *[param][map]_team[team_id]*
 > - *map_played[id]_team[team_id]* - score; [id] - serial number of played map
 > - *map_played[id]_opponent_team[team_id]* - opponent score; [id] - serial number of played map
+
+```
+>>> MapsStatTeamFull(df, last_maps=20, months=3, start_index=None, finish_index=None)
+```
+> ___type: class___ <br />
+> Params:
+> - *df* - pandas frame from previous step
+> - *last_maps* - last X played maps on map
+> - *months* - time period
+> - *start_index* - start index 
+> - *finish_index* - last index
+
+```
+>>> MapsStatTeamFull.add_all_params()
+```
+> ___type: func___ <br />
+> Modify pandas frame, add columns: <br />
+> - *[param]_team[team_id]*
+> - *current_map_played_[id]_team[team_id]* - score; [id] - serial number of played map
+> - *current_map_played_[id]_opponent_team[team_id]* - opponent score; [id] - serial number of played map
+>
+> Return new pandas DataFrame with all columns
+
 
 
 
