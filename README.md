@@ -157,6 +157,8 @@
 > - *map_played[id]_team[team_id]* - score; [id] - serial number of played map
 > - *map_played[id]_opponent_team[team_id]* - opponent score; [id] - serial number of played map
 
+## Split DataFrame on maps and save stats on played map each team
+
 ```
 >>> MapsStatTeamFull(df, last_maps=20, months=3, start_index=None, finish_index=None)
 ```
@@ -178,22 +180,6 @@
 > - *current_map_played_[id]_opponent_team[team_id]* - opponent score; [id] - serial number of played map
 >
 > Return new pandas DataFrame with all columns
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
