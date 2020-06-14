@@ -1,15 +1,12 @@
-# ML_predict_CS-GO_matches
-
-### data format:
--	match_url text,<br />
--	team1_url text,<br />
--	team2_url text,<br />
-
-
-# The unofficial HLTV Python API
-
 ## INSTALLATION
 
+```
+>>> pip3 install -r requirements.txt
+```
+OR
+```
+>>> pip3 install requests urllib3 datetime bs4 numpy pandas
+```
 
 ## USAGE
 
