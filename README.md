@@ -20,7 +20,7 @@
 ```
 > Params: <br />
 > - *filename* - for saving pandas frame <br />
-> - *pages_with_results* - array with numbers of pages with 
+> - *pages_with_results* - array with numbers of pages with results <br />
 >
 > Return pandas DataFrame with columns: <br />
 > - match_url <br />
